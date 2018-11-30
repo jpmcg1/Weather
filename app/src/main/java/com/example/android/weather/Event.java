@@ -1,5 +1,8 @@
 package com.example.android.weather;
 
+/*
+* {@Event} represents a weather event.
+*/
 public class Event {
 
     // The current temperature
@@ -10,8 +13,8 @@ public class Event {
 
 
     // Constructs a new weather Event
-    public Event(double temperature, String weather) {
-        currentTemperature = temperature;
-        currentWeather = weather;
+    public Event(double eventTemperature, String eventWeather) {
+        currentTemperature = eventTemperature;
+        currentWeather = eventWeather;
     }
 }

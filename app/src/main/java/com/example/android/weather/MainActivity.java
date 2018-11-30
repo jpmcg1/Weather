@@ -5,9 +5,41 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    // URL for the weather data from the OpenWeatherMap website.
+    private static final String WEATHER_REQUEST_URL =
+            "INSERT API HERE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Create an AsyncTask to perform the HTTP request on the given URL.
+        // When the result is received, update the UI.
+        /*WeatherAsyncTask task = new WeatherAsyncTask();
+        task.execute(WEATHER_REQUEST_URL);*/
     }
+
+    // To perform a network request on a background threat, and update the UI.
+   /* private class WeatherAsyncTask<String, Void, Event> {
+
+        // Runs on a background thread to make the network request.
+        // Don't update the UI in the background thread, do it after it is finished.
+        protected Event doInBackground(String... urls) {
+            // Don't perform the task if there are no URLs, or the first URL is nul
+            if (urls.length < 1 || urls[0] == null) {
+                return null;
+            }
+            Event result = Utils.fetchWeatherData(urls[0]);
+            return result;
+            }
+        }
+
+        // After the background thread request is complete, update the UI.
+        protected void onPostExecute(Event result) {
+        if (result == null) {
+            return;
+        }
+        updateUi(result);
+    }*/
 }
