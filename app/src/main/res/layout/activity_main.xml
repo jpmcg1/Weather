@@ -49,4 +49,15 @@
         android:textAllCaps="true"
         android:textAppearance="?android:textAppearanceMedium"/>
 
+    // The current weather
+    <TextView
+        android:id="@+id/weather"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:textAllCaps="true"
+        android:textAppearance="?android:textAppearanceMedium"/>
+        />
+
 </LinearLayout>

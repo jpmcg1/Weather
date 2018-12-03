@@ -28,16 +28,21 @@ public class MainActivity extends AppCompatActivity {
 
     // Update the user interface with the current weather
     private void updateUi(Event results) {
+        // Update the temperature TextView
         TextView tempTextVIew = (TextView) findViewById(R.id.temp);
-        tempTextVIew.setText(formatWeather(results.getCurrentTemperature()));
+        tempTextVIew.setText(formatTemperature(results.getCurrentTemperature()));
+
+        // Update the Weather TextView
+        TextView weatherTextView = (TextView) findViewById(R.id.weather);
+        weatherTextView.setText(results.getCurrentWeather());
+
     }
 
-    private String formatWeather(double magnitude) {
+    // A method to format the temperature units and dps
+    private String formatTemperature(double temperature) {
         DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
-        return magnitudeFormat.format(magnitude);
+        return magnitudeFormat.format(temperature);
     }
-
-
 
 
     // To perform a network request on a background threat, and update the UI.
@@ -54,14 +59,15 @@ public class MainActivity extends AppCompatActivity {
             Event result = Utils.fetchWeatherData(urls[0]);
             System.out.println("RESULTS: " + result.getCurrentWeather() + " " + result.getCurrentTemperature());
             return result;
-            }
         }
 
         // After the background thread request is complete, update the UI.
         protected void onPostExecute(Event result) {
-        if (result == null) {
-            return;
+            if (result == null) {
+                return;
+            }
+            updateUi(result);
+            System.out.println("RESULTS 2: " + result.getCurrentWeather() + " " + result.getCurrentTemperature());
         }
-        updateUi(result);
     }
 }
