@@ -18,7 +18,7 @@
         android:paddingBottom="16dp"
         android:textAllCaps="true"
         android:gravity="center_horizontal"
-        android:text="Is it raining in Manchester?!"
+        android:text="What is the weather in Manchester?!"
         />
 
     // This shows the weather schematic depending on the weather at the time.
@@ -30,5 +30,20 @@
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         />
+
+    // The temperature title
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="Current Temperature"
+        />
+
+    // The current temperature
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width= "match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
