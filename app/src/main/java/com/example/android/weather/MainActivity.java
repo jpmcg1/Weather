@@ -3,6 +3,11 @@ package com.example.android.weather;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,9 +26,18 @@ public class MainActivity extends AppCompatActivity {
         task.execute(WEATHER_REQUEST_URL);
     }
 
+    // Update the user interface with the current weather
     private void updateUi(Event results) {
-
+        TextView tempTextVIew = (TextView) findViewById(R.id.temp);
+        tempTextVIew.setText(formatWeather(results.getCurrentTemperature()));
     }
+
+    private String formatWeather(double magnitude) {
+        DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
+        return magnitudeFormat.format(magnitude);
+    }
+
+
 
 
     // To perform a network request on a background threat, and update the UI.
@@ -31,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Runs on a background thread to make the network request.
         // Don't update the UI in the background thread, do it after it is finished.
+        @Override
         protected Event doInBackground(String... urls) {
             // Don't perform the task if there are no URLs, or the first URL is nul
             if (urls.length < 1 || urls[0] == null) {
                 return null;
             }
             Event result = Utils.fetchWeatherData(urls[0]);
+            System.out.println("RESULTS: " + result.getCurrentWeather() + " " + result.getCurrentTemperature());
             return result;
             }
         }

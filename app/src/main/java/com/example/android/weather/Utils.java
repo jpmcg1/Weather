@@ -28,6 +28,7 @@ public class Utils {
         String jsonResponse = "";
         try {
             jsonResponse = makeHttpRequest(url);
+            Log.e(TAG, "Success making HTTP request");
         } catch (IOException e) {
             Log.e(TAG, "Problem making the HTTP request", e);
         }
@@ -43,6 +44,7 @@ public class Utils {
 
         try {
             url = new URL(urlRequest);
+            Log.e(TAG, "Success creating URL");
         } catch (MalformedURLException exception) {
             Log.e(TAG, "Error creating URL", exception);
             return null;
@@ -76,6 +78,7 @@ public class Utils {
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
+                Log.e(TAG, "Success resolving JSON results");
             } else {
                 Log.e(TAG, "Error response code " + urlConnection.getResponseCode());
             }
@@ -125,6 +128,7 @@ public class Utils {
             JSONObject firstPosition = weather.getJSONObject(0);
             String weatherDescription = firstPosition.getString("description");
             Double temperature = main.getDouble("temp");
+            Log.e(TAG, "Success parsing JSON results");
 
             // Return the newly created Event with up to date information
             return new Event(temperature, weatherDescription);

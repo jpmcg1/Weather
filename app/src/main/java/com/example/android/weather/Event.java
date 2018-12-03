@@ -17,4 +17,12 @@ public class Event {
         currentTemperature = eventTemperature;
         currentWeather = eventWeather;
     }
+
+    public double getCurrentTemperature() {
+        return currentTemperature;
+    }
+
+    public String getCurrentWeather() {
+        return currentWeather;
+    }
 }
