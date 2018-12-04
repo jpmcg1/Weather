@@ -1,5 +1,8 @@
 package com.example.android.weather;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -122,17 +125,30 @@ public class Utils {
         try {
             // Create a JSON object to hold the data
             JSONObject object = new JSONObject(weatherJSON);
+
+            // Access the "weather" array
             JSONArray weather = object.getJSONArray("weather");
-            JSONObject main = object.getJSONObject("main");
-
             JSONObject firstPosition = weather.getJSONObject(0);
-            String weatherDescription = firstPosition.getString("description");
+            String weatherMain = firstPosition.getString("main");
+            String weatherIcon = firstPosition.getString("icon");
+
+            // Access the "main" object
+            JSONObject main = object.getJSONObject("main");
             Double temperature = main.getDouble("temp");
+
+            try {
+                URL url = createUrlObject("http://openweathermap.org/img/w/" + weatherIcon + ".png");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                // Return the newly created Event with up to date information
+                return new Event(temperature, weatherMain, myBitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Log.e(TAG, "Success parsing JSON results");
-
-            // Return the newly created Event with up to date information
-            return new Event(temperature, weatherDescription);
-
         } catch (JSONException e) {
             Log.e(TAG, "Problem parsing the weather JSON results", e);
         }

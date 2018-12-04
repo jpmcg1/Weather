@@ -22,12 +22,9 @@
 
     // This shows the weather schematic depending on the weather at the time.
     <ImageView
-        android:id="@+id/weather_schematic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
+        android:id="@+id/weather_icon"
+        android:layout_width="88dp"
+        android:layout_height="88dp"
         />
 
     // The temperature title

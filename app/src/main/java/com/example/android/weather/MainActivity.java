@@ -1,12 +1,20 @@
 package com.example.android.weather;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         TextView weatherTextView = (TextView) findViewById(R.id.weather);
         weatherTextView.setText(results.getCurrentWeather());
 
+        ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
+        weatherIconImageView.setImageBitmap(results.getCurrentWeatherIcon());
     }
 
     // A method to format the temperature units and dps
@@ -51,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     // To perform a network request on a background threat, and update the UI.
     private class WeatherAsyncTask extends AsyncTask<String, Void, Event> {
-
         // Runs on a background thread to make the network request.
         // Don't update the UI in the background thread, do it after it is finished.
         @Override
@@ -62,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
             Event result = Utils.fetchWeatherData(urls[0]);
             System.out.println("RESULTS: " + result.getCurrentWeather() + " " + result.getCurrentTemperature());
+
             return result;
         }
 
