@@ -40,8 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
     // A method to format the temperature units and dps
     private String formatTemperature(double temperature) {
+        // Change the temperature from Kelvin to Degrees
+        Double degreeTemperature = temperature - 273.15;
+
+        // Temperature to 1 d.p.
         DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
-        return magnitudeFormat.format(temperature);
+        return magnitudeFormat.format(degreeTemperature);
     }
 
 
