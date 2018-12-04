@@ -136,15 +136,18 @@ public class Utils {
             JSONObject main = object.getJSONObject("main");
             Double temperature = main.getDouble("temp");
 
+            // Get the Bitmap image from the URL - the icon ID is taken from the JSON first
+            // position object above
             try {
                 URL url = createUrlObject("http://openweathermap.org/img/w/" + weatherIcon + ".png");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.connect();
                 InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                Bitmap weatherIconImage = BitmapFactory.decodeStream(input);
+
                 // Return the newly created Event with up to date information
-                return new Event(temperature, weatherMain, myBitmap);
+                return new Event(temperature, weatherMain, weatherIconImage);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -154,5 +157,4 @@ public class Utils {
         }
         return null;
     }
-
 }

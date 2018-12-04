@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity {
         TextView weatherTextView = (TextView) findViewById(R.id.weather);
         weatherTextView.setText(results.getCurrentWeather());
 
-        ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
-        weatherIconImageView.setImageBitmap(results.getCurrentWeatherIcon());
+        // Update the weather icon ImageView
+        /*ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);*/
+        /*weatherIconImageView.setImageBitmap(results.getCurrentWeatherIcon());*/
     }
 
     // A method to format the temperature units and dps

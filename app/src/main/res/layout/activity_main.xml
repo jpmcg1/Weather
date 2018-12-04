@@ -23,8 +23,10 @@
     // This shows the weather schematic depending on the weather at the time.
     <ImageView
         android:id="@+id/weather_icon"
-        android:layout_width="88dp"
-        android:layout_height="88dp"
+        android:layout_width="200dp"
+        android:layout_height="160dp"
+        android:background="@drawable/rain"
+        android:layout_gravity="center_horizontal"
         />
 
     // The temperature title
