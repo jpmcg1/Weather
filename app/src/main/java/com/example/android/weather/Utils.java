@@ -130,7 +130,7 @@ public class Utils {
             JSONArray weather = object.getJSONArray("weather");
             JSONObject firstPosition = weather.getJSONObject(0);
             String weatherMain = firstPosition.getString("main");
-            String weatherIcon = firstPosition.getString("icon");
+            String weatherId = firstPosition.getString("id");
 
             // Access the "main" object
             JSONObject main = object.getJSONObject("main");
@@ -154,7 +154,7 @@ public class Utils {
 
             Log.e(TAG, "Success parsing JSON results");
             // Return the newly created Event with up to date information
-            return new Event(temperature, weatherMain, weatherIcon);
+            return new Event(temperature, weatherMain, weatherId);
         } catch (JSONException e) {
             Log.e(TAG, "Problem parsing the weather JSON results", e);
         }

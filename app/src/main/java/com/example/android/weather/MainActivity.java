@@ -46,7 +46,30 @@ public class MainActivity extends AppCompatActivity {
 
         // Update the weather icon ImageView
         ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
-        weatherIconImageView.setImageResource(R.drawable.rain);
+        String weatherId = results.getCurrentWeatherID();
+        char c = weatherId.charAt(0);
+        int a = Character.getNumericValue(c);
+        if (a == 2) {
+            weatherIconImageView.setImageResource(R.drawable.thunder);
+        } else if (a == 3) {
+            weatherIconImageView.setImageResource(R.drawable.drizzle);
+        } else if (a == 5) {
+            weatherIconImageView.setImageResource(R.drawable.rain);
+        } else if (a == 6) {
+            weatherIconImageView.setImageResource(R.drawable.snow);
+        } else if (a == 7) {
+            weatherIconImageView.setImageResource(R.drawable.fog);
+        } else if (a == 8) {
+            char c2 = weatherId.charAt(2);
+            int a2 = Character.getNumericValue(c2);
+            if (a2 == 0) {
+                weatherIconImageView.setImageResource(R.drawable.clear_sky);
+            } else {
+                weatherIconImageView.setImageResource(R.drawable.cloudy);
+            }
+        } else {
+            weatherIconImageView.setImageResource(R.drawable.unknown);
+        }
     }
 
     // A method to format the temperature units and dps
@@ -72,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
             Event result = Utils.fetchWeatherData(urls[0]);
             System.out.println("RESULTS: " + result.getCurrentWeather() + " " +
-                    result.getCurrentTemperature() + " " + result.getCurrentWeatherIconID());
+                    result.getCurrentTemperature() + " " + result.getCurrentWeatherID());
 
             return result;
         }

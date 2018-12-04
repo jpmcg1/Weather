@@ -15,14 +15,14 @@ public class Event {
     private String currentWeather;
 
     // The weather icon from the API
-    private String currentWeatherIconID;
+    private String currentWeatherID;
 
 
     // Constructs a new weather Event
-    public Event(double eventTemperature, String eventWeather, String eventWeatherIconID) {
+    public Event(double eventTemperature, String eventWeather, String eventWeatherID) {
         currentTemperature = eventTemperature;
         currentWeather = eventWeather;
-        currentWeatherIconID = eventWeatherIconID;
+        currentWeatherID = eventWeatherID;
     }
 
     public double getCurrentTemperature() {
@@ -33,7 +33,7 @@ public class Event {
         return currentWeather;
     }
 
-    public String getCurrentWeatherIconID() {
-        return currentWeatherIconID;
+    public String getCurrentWeatherID() {
+        return currentWeatherID;
     }
 }
