@@ -138,7 +138,7 @@ public class Utils {
 
             // Get the Bitmap image from the URL - the icon ID is taken from the JSON first
             // position object above
-            try {
+            /*try {
                 URL url = createUrlObject("http://openweathermap.org/img/w/" + weatherIcon + ".png");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
@@ -150,8 +150,11 @@ public class Utils {
                 return new Event(temperature, weatherMain, weatherIconImage);
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
+
             Log.e(TAG, "Success parsing JSON results");
+            // Return the newly created Event with up to date information
+            return new Event(temperature, weatherMain, weatherIcon);
         } catch (JSONException e) {
             Log.e(TAG, "Problem parsing the weather JSON results", e);
         }

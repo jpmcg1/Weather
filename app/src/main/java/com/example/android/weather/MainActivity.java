@@ -46,9 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Update the weather icon ImageView
         ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
-        /*weatherIconImageView.setImageBitmap(results.getCurrentWeatherIcon());*/
         weatherIconImageView.setImageResource(R.drawable.rain);
-
     }
 
     // A method to format the temperature units and dps
@@ -73,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
             Event result = Utils.fetchWeatherData(urls[0]);
-            System.out.println("RESULTS: " + result.getCurrentWeather() + " " + result.getCurrentTemperature());
+            System.out.println("RESULTS: " + result.getCurrentWeather() + " " +
+                    result.getCurrentTemperature() + " " + result.getCurrentWeatherIconID());
 
             return result;
         }
@@ -84,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             updateUi(result);
-            System.out.println("RESULTS 2: " + result.getCurrentWeather() + " " + result.getCurrentTemperature());
         }
     }
 }
