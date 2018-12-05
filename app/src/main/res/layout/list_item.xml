@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="88dp"
+    android:orientation="horizontal">
+
+    // The hour the weather forecast reflects
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        tools:text="TIME"
+        />
+
+    // The schematic of the weather at this time in the future
+    <ImageView
+        android:id="@+id/weather_icon_small"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        />
+
+    // The predicted temperature
+    <TextView
+        android:id="@+id/temp_predicted"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        tools:text="TEMP" />
+
+</LinearLayout>

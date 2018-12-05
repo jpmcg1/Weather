@@ -17,6 +17,9 @@ import java.io.InputStream;
 import java.net.URL;
 import java.text.DecimalFormat;
 
+// TODO udpate app so it gives the 24 hour weather - need a listItem and adapter for this
+// Put it in a new activity with a button on main activity saying "24 hour forecast"
+
 public class MainActivity extends AppCompatActivity {
 
     // URL for the weather data from the OpenWeatherMap website.
@@ -82,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         return magnitudeFormat.format(degreeTemperature);
     }
 
+    //-------------------------- AsyncTask ----------------------------------------------//
 
     // To perform a network request on a background threat, and update the UI.
     private class WeatherAsyncTask extends AsyncTask<String, Void, Event> {
