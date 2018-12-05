@@ -1,39 +1,44 @@
 package com.example.android.weather;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-
 /*
 * {@Event} represents a weather event.
 */
 public class Event {
 
     // The current temperature
-    private double currentTemperature;
+    private double temperature;
 
     // The current weather
-    private String currentWeather;
+    private String weather;
 
     // The weather icon from the API
-    private String currentWeatherID;
+    private String weatherID;
+
+    private int time;
 
 
     // Constructs a new weather Event
-    public Event(double eventTemperature, String eventWeather, String eventWeatherID) {
-        currentTemperature = eventTemperature;
-        currentWeather = eventWeather;
-        currentWeatherID = eventWeatherID;
+    public Event(double eventTemperature, String eventWeather, String eventWeatherID,
+                 int timeAndDate) {
+        temperature = eventTemperature;
+        weather = eventWeather;
+        weatherID = eventWeatherID;
+        time = timeAndDate;
     }
 
-    public double getCurrentTemperature() {
-        return currentTemperature;
+    public double getTemperature() {
+        return temperature;
     }
 
-    public String getCurrentWeather() {
-        return currentWeather;
+    public String getWeather() {
+        return weather;
     }
 
-    public String getCurrentWeatherID() {
-        return currentWeatherID;
+    public String getWeatherID() {
+        return weatherID;
+    }
+
+    public int getTime() {
+        return time;
     }
 }

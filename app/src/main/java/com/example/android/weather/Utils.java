@@ -122,8 +122,33 @@ public class Utils {
             return null;
         }
 
+        // Parse the JSON response for the 5-day forecast URL (differnt JSON format than
+        // the current weather JSON response)
         try {
             // Create a JSON object to hold the data
+            JSONObject object = new JSONObject(weatherJSON);
+            // Access the "list" array
+            JSONArray listArray = object.getJSONArray("list");
+            // Access first object in the list
+            JSONObject firstObject = listArray.getJSONObject(0);
+            // Get time and date info
+            int timeAndDate = firstObject.getInt("dt");
+            // Access the "main" object
+            JSONObject mainObject = firstObject.getJSONObject("main");
+            // Get temp info
+            double temperature = mainObject.getDouble("temp");
+            // Access the "weather" object
+            JSONArray weather = firstObject.getJSONArray("weather");
+            // Access the first object in the array
+            JSONObject firstObjectII = weather.getJSONObject(0);
+            // Get the weatherID
+            String weatherId = firstObjectII.getString("id");
+            // Get weather
+            String weatherMain = firstObjectII.getString("main");
+
+// -----------------The below JSON parse is for the current weather URL---------------------//
+
+            /*// Create a JSON object to hold the data
             JSONObject object = new JSONObject(weatherJSON);
 
             // Access the "weather" array
@@ -134,7 +159,9 @@ public class Utils {
 
             // Access the "main" object
             JSONObject main = object.getJSONObject("main");
-            Double temperature = main.getDouble("temp");
+            Double temperature = main.getDouble("temp");*/
+
+            //-----------------Getting the weather icon straight from the API -----------//
 
             // Get the Bitmap image from the URL - the icon ID is taken from the JSON first
             // position object above
@@ -154,7 +181,7 @@ public class Utils {
 
             Log.e(TAG, "Success parsing JSON results");
             // Return the newly created Event with up to date information
-            return new Event(temperature, weatherMain, weatherId);
+            return new Event(temperature, weatherMain, weatherId, timeAndDate);
         } catch (JSONException e) {
             Log.e(TAG, "Problem parsing the weather JSON results", e);
         }

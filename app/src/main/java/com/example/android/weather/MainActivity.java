@@ -1,30 +1,21 @@
 package com.example.android.weather;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
-import java.net.URL;
 import java.text.DecimalFormat;
 
-// TODO udpate app so it gives the 24 hour weather - need a listItem and adapter for this
-// Put it in a new activity with a button on main activity saying "24 hour forecast"
+// TODO udpate app so it gives the 5 day forecast every 3 hours - need a listItem and adapter for this
+// Put it in a new activity with a button on main activity saying "5 day forecast"
 
 public class MainActivity extends AppCompatActivity {
 
     // URL for the weather data from the OpenWeatherMap website.
     private static final String WEATHER_REQUEST_URL =
-            "http://api.openweathermap.org/data/2.5/weather?q=Manchester,uk&appid=51925842ffff00a9ea6b84970bd7321e";
+            "http://api.openweathermap.org/data/2.5/forecast?q=Manchester,uk&APPID=51925842ffff00a9ea6b84970bd7321e";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,15 +32,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateUi(Event results) {
         // Update the temperature TextView
         TextView tempTextVIew = (TextView) findViewById(R.id.temp);
-        tempTextVIew.setText(formatTemperature(results.getCurrentTemperature()));
+        tempTextVIew.setText(formatTemperature(results.getTemperature()));
 
         // Update the Weather TextView
         TextView weatherTextView = (TextView) findViewById(R.id.weather);
-        weatherTextView.setText(results.getCurrentWeather());
+        weatherTextView.setText(results.getWeather());
 
         // Update the weather icon ImageView
         ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
-        String weatherId = results.getCurrentWeatherID();
+        String weatherId = results.getWeatherID();
         char c = weatherId.charAt(0);
         int a = Character.getNumericValue(c);
         if (a == 2) {
@@ -98,8 +89,8 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
             Event result = Utils.fetchWeatherData(urls[0]);
-            System.out.println("RESULTS: " + result.getCurrentWeather() + " " +
-                    result.getCurrentTemperature() + " " + result.getCurrentWeatherID());
+            System.out.println("RESULTS: " + result.getWeather() + " " +
+                    result.getTemperature() + " " + result.getWeatherID());
 
             return result;
         }
