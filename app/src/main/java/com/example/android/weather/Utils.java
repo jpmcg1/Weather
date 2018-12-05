@@ -17,13 +17,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Utils {
 
     private static final String TAG = "Utils";
 
     // Retrieves the weather data from the API and returns an Event
-    public static Event fetchWeatherData(String urlRequest) {
+    public static ArrayList<Event> fetchWeatherData(String urlRequest) {
         // Create URL object
         URL url = createUrlObject(urlRequest);
 
@@ -36,9 +37,9 @@ public class Utils {
             Log.e(TAG, "Problem making the HTTP request", e);
         }
 
-        Event weather = extractDataFromJson(jsonResponse);
+        ArrayList<Event> weatherList = extractDataFromJson(jsonResponse);
 
-        return weather;
+        return weatherList;
     }
 
     // Create a URL object from a URL String
@@ -115,36 +116,46 @@ public class Utils {
     }
 
     // Access the appropriate data in the API and returns and Event object with the data.
-    public static Event extractDataFromJson(String weatherJSON) {
+    public static ArrayList<Event> extractDataFromJson(String weatherJSON) {
         // If the JSON URL is empty, return null.
         if (TextUtils.isEmpty(weatherJSON)) {
             Log.v(TAG, "JSON string is empty or null");
             return null;
         }
 
-        // Parse the JSON response for the 5-day forecast URL (differnt JSON format than
+        // Create an empty ArrayList of Events
+        ArrayList<Event> events = new ArrayList<>();
+
+        // Parse the JSON response for the 5-day forecast URL (different JSON format than
         // the current weather JSON response)
         try {
             // Create a JSON object to hold the data
             JSONObject object = new JSONObject(weatherJSON);
             // Access the "list" array
             JSONArray listArray = object.getJSONArray("list");
-            // Access first object in the list
-            JSONObject firstObject = listArray.getJSONObject(0);
-            // Get time and date info
-            int timeAndDate = firstObject.getInt("dt");
-            // Access the "main" object
-            JSONObject mainObject = firstObject.getJSONObject("main");
-            // Get temp info
-            double temperature = mainObject.getDouble("temp");
-            // Access the "weather" object
-            JSONArray weather = firstObject.getJSONArray("weather");
-            // Access the first object in the array
-            JSONObject firstObjectII = weather.getJSONObject(0);
-            // Get the weatherID
-            String weatherId = firstObjectII.getString("id");
-            // Get weather
-            String weatherMain = firstObjectII.getString("main");
+
+            // Create an ArrayList of Events created from the JSON response
+            for (int i = 0; i < listArray.length() - 1; i++) {
+                // Access first object in the list
+                JSONObject firstObject = listArray.getJSONObject(i);
+                // Get time and date info
+                int timeAndDate = firstObject.getInt("dt");
+                // Access the "main" object
+                JSONObject mainObject = firstObject.getJSONObject("main");
+                // Get temp info
+                double temperature = mainObject.getDouble("temp");
+                // Access the "weather" object
+                JSONArray weather = firstObject.getJSONArray("weather");
+                // Access the first object in the array
+                JSONObject firstObjectII = weather.getJSONObject(0);
+                // Get the weatherID
+                String weatherId = firstObjectII.getString("id");
+                // Get weather
+                String weatherMain = firstObjectII.getString("main");
+
+                // Add the Event to the ArrayList
+                events.add(new Event(temperature, weatherMain, weatherId, timeAndDate));
+            }
 
 // -----------------The below JSON parse is for the current weather URL---------------------//
 
@@ -178,10 +189,9 @@ public class Utils {
             } catch (IOException e) {
                 e.printStackTrace();
             }*/
-
             Log.e(TAG, "Success parsing JSON results");
-            // Return the newly created Event with up to date information
-            return new Event(temperature, weatherMain, weatherId, timeAndDate);
+            // Return the ArrayList of Events
+            return events;
         } catch (JSONException e) {
             Log.e(TAG, "Problem parsing the weather JSON results", e);
         }

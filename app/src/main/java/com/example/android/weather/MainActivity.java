@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 // TODO udpate app so it gives the 5 day forecast every 3 hours - need a listItem and adapter for this
 // Put it in a new activity with a button on main activity saying "5 day forecast"
@@ -29,18 +30,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Update the user interface with the current weather
-    private void updateUi(Event results) {
+    private void updateUi(ArrayList<Event> results) {
+        // The first Event object in the array list should be the current weather
+        Event currentWeatherEvent = results.get(0);
+
         // Update the temperature TextView
         TextView tempTextVIew = (TextView) findViewById(R.id.temp);
-        tempTextVIew.setText(formatTemperature(results.getTemperature()));
+        tempTextVIew.setText(formatTemperature(currentWeatherEvent.getTemperature()));
 
         // Update the Weather TextView
         TextView weatherTextView = (TextView) findViewById(R.id.weather);
-        weatherTextView.setText(results.getWeather());
+        weatherTextView.setText(currentWeatherEvent.getWeather());
 
         // Update the weather icon ImageView
         ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
-        String weatherId = results.getWeatherID();
+        String weatherId = currentWeatherEvent.getWeatherID();
         char c = weatherId.charAt(0);
         int a = Character.getNumericValue(c);
         if (a == 2) {
@@ -79,24 +83,21 @@ public class MainActivity extends AppCompatActivity {
     //-------------------------- AsyncTask ----------------------------------------------//
 
     // To perform a network request on a background threat, and update the UI.
-    private class WeatherAsyncTask extends AsyncTask<String, Void, Event> {
+    private class WeatherAsyncTask extends AsyncTask<String, Void, ArrayList<Event>> {
         // Runs on a background thread to make the network request.
         // Don't update the UI in the background thread, do it after it is finished.
         @Override
-        protected Event doInBackground(String... urls) {
+        protected ArrayList<Event> doInBackground(String... urls) {
             // Don't perform the task if there are no URLs, or the first URL is nul
             if (urls.length < 1 || urls[0] == null) {
                 return null;
             }
-            Event result = Utils.fetchWeatherData(urls[0]);
-            System.out.println("RESULTS: " + result.getWeather() + " " +
-                    result.getTemperature() + " " + result.getWeatherID());
-
+            ArrayList<Event> result = Utils.fetchWeatherData(urls[0]);
             return result;
         }
 
         // After the background thread request is complete, update the UI.
-        protected void onPostExecute(Event result) {
+        protected void onPostExecute(ArrayList<Event> result) {
             if (result == null) {
                 return;
             }
