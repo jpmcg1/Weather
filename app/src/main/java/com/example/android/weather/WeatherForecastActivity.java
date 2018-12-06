@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class WeatherForecastActivity extends AppCompatActivity{
+    ArrayList<Event> mResults;
 
     // URL for the weather data from the OpenWeatherMap website for 5 DAY FORECAST.
     private static final String WEATHER_FORECAST_REQUEST_URL =
@@ -20,12 +22,17 @@ public class WeatherForecastActivity extends AppCompatActivity{
 
         // Create an AsyncTask to perform the HTTP request on the given URL.
         // When the result is received, update the UI.
-        WeatherForecastAsyncTask task = new WeatherForecastAsyncTask();
-        task.execute(WEATHER_FORECAST_REQUEST_URL);
+        /*WeatherForecastAsyncTask task = new WeatherForecastAsyncTask();
+        task.execute(WEATHER_FORECAST_REQUEST_URL);*/
+
+        final ArrayList<Event> res = new ArrayList<>();
+        res.add(new Event(255.5, "rain", "wind", 244));
+        res.add(new Event(242.5, "rain", "cold", 211));
+        res.add(new Event(888.4, "rain", "wind", 387));
 
         // Create new adapter for the weather forecast
         WeatherForecastAdapter adapter =
-                new WeatherForecastAdapter(this, task.doInBackground());
+                new WeatherForecastAdapter(this, res);
 
         // Create ListView to attach adapter to the list_item XML
         ListView listView = (ListView) findViewById(R.id.list);
@@ -36,7 +43,7 @@ public class WeatherForecastActivity extends AppCompatActivity{
 
     //------------------WeatherForecastAsyncTask---------------------------------//
 
-    private static class WeatherForecastAsyncTask
+    /*private class WeatherForecastAsyncTask
             extends AsyncTask<String, Void, ArrayList<Event>> {
 
         @Override
@@ -53,6 +60,7 @@ public class WeatherForecastActivity extends AppCompatActivity{
             if (results == null) {
                 return;
             }
+            mResults = results;
         }
-    }
+    }*/
 }
