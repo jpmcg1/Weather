@@ -58,4 +58,11 @@
         android:textAppearance="?android:textAppearanceMedium"/>
         />
 
+    <Button
+        android:id="@+id/forecast_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="5 DAY FORECAST"/>
+
 </LinearLayout>

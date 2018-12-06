@@ -1,8 +1,11 @@
 package com.example.android.weather;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.Date;
@@ -28,6 +31,19 @@ public class MainActivity extends AppCompatActivity {
         // When the result is received, update the UI.
         WeatherAsyncTask task = new WeatherAsyncTask();
         task.execute(WEATHER_REQUEST_URL);
+
+        // Find the button for the 5 day forecast
+        Button forecastButton = (Button) findViewById(R.id.forecast_button);
+        // Set a click listener to the Button to tell the system to create an Intent to the
+        // WeatherForecastActivity when clicked on
+        forecastButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent weatherForecatIntent =
+                        new Intent(MainActivity.this, WeatherForecastActivity.class);
+                startActivity(weatherForecatIntent);
+            }
+        });
     }
 
     // Update the user interface with the current weather
