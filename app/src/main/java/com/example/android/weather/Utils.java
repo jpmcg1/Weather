@@ -9,6 +9,7 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +25,8 @@ public class Utils {
     private static final String TAG = "Utils";
 
     // Retrieves the weather data from the API and returns an Event
-    public static ArrayList<Event> fetchWeatherData(String urlRequest) {
+    public static Event fetchWeatherData(String urlRequest) {
+
         // Create URL object
         URL url = createUrlObject(urlRequest);
 
@@ -36,10 +38,25 @@ public class Utils {
         } catch (IOException e) {
             Log.e(TAG, "Problem making the HTTP request", e);
         }
+        Event weather = extractDataFromJson(jsonResponse);
+        return weather;
+    }
+    public static ArrayList<Event> fetchWeatherForecastData(String urlRequest) {
+            // Create URL object
+            URL url = createUrlObject(urlRequest);
 
-        ArrayList<Event> weatherList = extractDataFromJson(jsonResponse);
+            // Perform a HTTP request to the URL and return a JSON response
+            String jsonResponse = "";
+            try {
+                jsonResponse = makeHttpRequest(url);
+                Log.e(TAG, "Success making HTTP request");
+            } catch (IOException e) {
+                Log.e(TAG, "Problem making the HTTP request", e);
+            }
 
-        return weatherList;
+            ArrayList<Event> weatherForecastList = extractDataFromJsonForecast(jsonResponse);
+
+        return weatherForecastList;
     }
 
     // Create a URL object from a URL String
@@ -115,7 +132,7 @@ public class Utils {
     }
 
     // Access the appropriate data in the API and returns and Event object with the data.
-    public static ArrayList<Event> extractDataFromJson(String weatherJSON) {
+    public static ArrayList<Event> extractDataFromJsonForecast(String weatherJSON) {
         // If the JSON URL is empty, return null.
         if (TextUtils.isEmpty(weatherJSON)) {
             Log.v(TAG, "JSON string is empty or null");
@@ -161,10 +178,27 @@ public class Utils {
             for (int j = 0; j < events.size() - 1; j++) {
                 System.out.println("Number: " + j + "; " + events.get(j).toString());
             }
+            Log.e(TAG, "Success parsing JSON results");
+            // Return the ArrayList of Events
+            return events;
+        } catch (JSONException e) {
+            Log.e(TAG, "Problem parsing the weather JSON results", e);
+        }
+        return null;
+    }
 
 // -----------------The below JSON parse is for the current weather URL---------------------//
 
-            /*// Create a JSON object to hold the data
+    // Access the appropriate data in the API and returns and Event object with the data.
+    public static Event extractDataFromJson(String weatherJSON) {
+        // If the JSON URL is empty, return null.
+        if (TextUtils.isEmpty(weatherJSON)) {
+            Log.v(TAG, "JSON string is empty or null");
+            return null;
+        }
+
+        try {
+            // Create a JSON object to hold the data
             JSONObject object = new JSONObject(weatherJSON);
 
             // Access the "weather" array
@@ -175,12 +209,20 @@ public class Utils {
 
             // Access the "main" object
             JSONObject main = object.getJSONObject("main");
-            Double temperature = main.getDouble("temp");*/
+            Double temperature = main.getDouble("temp");
 
-            //-----------------Getting the weather icon straight from the API -----------//
+            return new Event(temperature, weatherMain, weatherId);
+        } catch (JSONException e) {
+            Log.e(TAG, "Problem parsing the weather JSON results", e);
+        }
+        return null;
+    }
 
-            // Get the Bitmap image from the URL - the icon ID is taken from the JSON first
-            // position object above
+
+    //-----------------Getting the weather icon straight from the API -----------//
+
+    // Get the Bitmap image from the URL - the icon ID is taken from the JSON first
+    // position object above
             /*try {
                 URL url = createUrlObject("http://openweathermap.org/img/w/" + weatherIcon + ".png");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -194,12 +236,5 @@ public class Utils {
             } catch (IOException e) {
                 e.printStackTrace();
             }*/
-            Log.e(TAG, "Success parsing JSON results");
-            // Return the ArrayList of Events
-            return events;
-        } catch (JSONException e) {
-            Log.e(TAG, "Problem parsing the weather JSON results", e);
+
         }
-        return null;
-    }
-}

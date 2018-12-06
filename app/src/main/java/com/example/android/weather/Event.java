@@ -16,6 +16,12 @@ public class Event {
 
     private int time;
 
+    // Constructs a new weather Event
+    public Event(double eventTemperature, String eventWeather, String eventWeatherID) {
+        temperature = eventTemperature;
+        weather = eventWeather;
+        weatherID = eventWeatherID;
+    }
 
     // Constructs a new weather Event
     public Event(double eventTemperature, String eventWeather, String eventWeatherID,

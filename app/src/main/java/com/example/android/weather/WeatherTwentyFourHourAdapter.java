@@ -31,9 +31,17 @@ public class WeatherTwentyFourHourAdapter extends ArrayAdapter<Event> {
         // Get the Event object at the position in the list defined in the method parameter
         Event currentEvent = getItem(position);
 
+        // Set the time on the UI for the weather forecast of the current Event
         TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
+        timeTextView.setText(currentEvent.getTime());
 
+        // Set the temperature on the UI for the weather forecast of the current Event
+        TextView tempTextView = (TextView) listItemView.findViewById(R.id.temp_predicted);
+        tempTextView.setText(Double.toString(currentEvent.getTemperature()));
 
-        return null;
+        // TODO add in images to Drawable file and set them to UI here.
+        // Check Main Activity for details
+
+        return listItemView;
     }
 }

@@ -5,18 +5,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 // TODO udpate app so it gives the 5 day forecast every 3 hours - need a listItem and adapter for this
 // Put it in a new activity with a button on main activity saying "5 day forecast"
 
+// TODO Currently he main activity os showing the first Event in the ArrayLIst taken from the
+// JSON response of the 5 day forecast URL - this is NOT the current weather.
+// Need to change this back to the current weaterh
+
 public class MainActivity extends AppCompatActivity {
 
-    // URL for the weather data from the OpenWeatherMap website.
+    // URL for the weather data from the OpenWeatherMap website for CURRENT weather.
     private static final String WEATHER_REQUEST_URL =
-            "http://api.openweathermap.org/data/2.5/forecast?q=Manchester,uk&APPID=51925842ffff00a9ea6b84970bd7321e";
+            "http://api.openweathermap.org/data/2.5/weather?q=Manchester,uk&appid=51925842ffff00a9ea6b84970bd7321e";
+
+    /*// URL for the weather data from the OpenWeatherMap website for 5 DAY FORECAST.
+    private static final String WEATHER_FORECAST_REQUEST_URL =
+            "http://api.openweathermap.org/data/2.5/forecast?q=Manchester,uk&APPID=51925842ffff00a9ea6b84970bd7321e";*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +39,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Update the user interface with the current weather
-    private void updateUi(ArrayList<Event> results) {
-        // The first Event object in the array list should be the current weather
-        Event currentWeatherEvent = results.get(0);
-
+    private void updateUi(Event result) {
         // Update the temperature TextView
         TextView tempTextVIew = (TextView) findViewById(R.id.temp);
-        tempTextVIew.setText(formatTemperature(currentWeatherEvent.getTemperature()));
+        tempTextVIew.setText(formatTemperature(result.getTemperature()));
 
         // Update the Weather TextView
         TextView weatherTextView = (TextView) findViewById(R.id.weather);
-        weatherTextView.setText(currentWeatherEvent.getWeather());
-
-        // Check the printout of the date
-        System.out.println("DATE INFO: " + formatDate(currentWeatherEvent.getTime()));
+        weatherTextView.setText(result.getWeather());
 
         // Update the weather icon ImageView
         ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
-        String weatherId = currentWeatherEvent.getWeatherID();
+        String weatherId = result.getWeatherID();
         char c = weatherId.charAt(0);
         int a = Character.getNumericValue(c);
         if (a == 2) {
@@ -91,21 +94,21 @@ public class MainActivity extends AppCompatActivity {
     //-------------------------- AsyncTask ----------------------------------------------//
 
     // To perform a network request on a background threat, and update the UI.
-    private class WeatherAsyncTask extends AsyncTask<String, Void, ArrayList<Event>> {
+    private class WeatherAsyncTask extends AsyncTask<String, Void, Event> {
         // Runs on a background thread to make the network request.
         // Don't update the UI in the background thread, do it after it is finished.
         @Override
-        protected ArrayList<Event> doInBackground(String... urls) {
+        protected Event doInBackground(String... urls) {
             // Don't perform the task if there are no URLs, or the first URL is nul
             if (urls.length < 1 || urls[0] == null) {
                 return null;
             }
-            ArrayList<Event> result = Utils.fetchWeatherData(urls[0]);
+            Event result = Utils.fetchWeatherData(urls[0]);
             return result;
         }
 
         // After the background thread request is complete, update the UI.
-        protected void onPostExecute(ArrayList<Event> result) {
+        protected void onPostExecute(Event result) {
             if (result == null) {
                 return;
             }
