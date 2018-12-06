@@ -19,10 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String WEATHER_REQUEST_URL =
             "http://api.openweathermap.org/data/2.5/weather?q=Manchester,uk&appid=51925842ffff00a9ea6b84970bd7321e";
 
-    /*// URL for the weather data from the OpenWeatherMap website for 5 DAY FORECAST.
-    private static final String WEATHER_FORECAST_REQUEST_URL =
-            "http://api.openweathermap.org/data/2.5/forecast?q=Manchester,uk&APPID=51925842ffff00a9ea6b84970bd7321e";*/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
