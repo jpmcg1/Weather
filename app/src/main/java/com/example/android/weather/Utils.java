@@ -24,9 +24,8 @@ public class Utils {
 
     private static final String TAG = "Utils";
 
-    // Retrieves the weather data from the API and returns an Event
+    // Retrieves the weather data from the API for current weather and returns an Event
     public static Event fetchWeatherData(String urlRequest) {
-
         // Create URL object
         URL url = createUrlObject(urlRequest);
 
@@ -41,20 +40,23 @@ public class Utils {
         Event weather = extractDataFromJson(jsonResponse);
         return weather;
     }
+
+    // Retrieves the weather data from the API for 5 day forecast weather and
+    // returns an ArrayList<Event>
     public static ArrayList<Event> fetchWeatherForecastData(String urlRequest) {
-            // Create URL object
-            URL url = createUrlObject(urlRequest);
+        // Create URL object
+        URL url = createUrlObject(urlRequest);
 
-            // Perform a HTTP request to the URL and return a JSON response
-            String jsonResponse = "";
-            try {
-                jsonResponse = makeHttpRequest(url);
-                Log.e(TAG, "Success making HTTP request");
-            } catch (IOException e) {
-                Log.e(TAG, "Problem making the HTTP request", e);
-            }
+        // Perform a HTTP request to the URL and return a JSON response
+        String jsonResponse = "";
+        try {
+            jsonResponse = makeHttpRequest(url);
+            Log.e(TAG, "Success making HTTP request");
+        } catch (IOException e) {
+            Log.e(TAG, "Problem making the HTTP request", e);
+        }
 
-            ArrayList<Event> weatherForecastList = extractDataFromJsonForecast(jsonResponse);
+        ArrayList<Event> weatherForecastList = extractDataFromJsonForecast(jsonResponse);
 
         return weatherForecastList;
     }
@@ -131,7 +133,42 @@ public class Utils {
         return output.toString();
     }
 
-    // Access the appropriate data in the API and returns and Event object with the data.
+    // Access the appropriate data in the API and returns and Event object
+    // with the current weather data.
+    public static Event extractDataFromJson(String weatherJSON) {
+        // If the JSON URL is empty, return null.
+        if (TextUtils.isEmpty(weatherJSON)) {
+            Log.v(TAG, "JSON string is empty or null");
+            return null;
+        }
+
+        try {
+            // Create a JSON object to hold the data
+            JSONObject object = new JSONObject(weatherJSON);
+
+            // Access the "weather" array
+            JSONArray weather = object.getJSONArray("weather");
+            JSONObject firstPosition = weather.getJSONObject(0);
+            String weatherMain = firstPosition.getString("main");
+            String weatherId = firstPosition.getString("id");
+
+            // Access the "main" object
+            JSONObject main = object.getJSONObject("main");
+            Double temperature = main.getDouble("temp");
+
+            Event currentWeather = new Event(temperature, weatherMain, weatherId);
+
+            // Print out the retrieved current weather Event to check it worked
+            System.out.println(currentWeather.toString());
+            return currentWeather;
+        } catch (JSONException e) {
+            Log.e(TAG, "Problem parsing the weather JSON results", e);
+        }
+        return null;
+    }
+
+    // Access the appropriate data in the API and returns and ArrayList<Event>
+    // object with the 5 day forecast data.
     public static ArrayList<Event> extractDataFromJsonForecast(String weatherJSON) {
         // If the JSON URL is empty, return null.
         if (TextUtils.isEmpty(weatherJSON)) {
@@ -187,38 +224,6 @@ public class Utils {
         return null;
     }
 
-// -----------------The below JSON parse is for the current weather URL---------------------//
-
-    // Access the appropriate data in the API and returns and Event object with the data.
-    public static Event extractDataFromJson(String weatherJSON) {
-        // If the JSON URL is empty, return null.
-        if (TextUtils.isEmpty(weatherJSON)) {
-            Log.v(TAG, "JSON string is empty or null");
-            return null;
-        }
-
-        try {
-            // Create a JSON object to hold the data
-            JSONObject object = new JSONObject(weatherJSON);
-
-            // Access the "weather" array
-            JSONArray weather = object.getJSONArray("weather");
-            JSONObject firstPosition = weather.getJSONObject(0);
-            String weatherMain = firstPosition.getString("main");
-            String weatherId = firstPosition.getString("id");
-
-            // Access the "main" object
-            JSONObject main = object.getJSONObject("main");
-            Double temperature = main.getDouble("temp");
-
-            return new Event(temperature, weatherMain, weatherId);
-        } catch (JSONException e) {
-            Log.e(TAG, "Problem parsing the weather JSON results", e);
-        }
-        return null;
-    }
-
-
     //-----------------Getting the weather icon straight from the API -----------//
 
     // Get the Bitmap image from the URL - the icon ID is taken from the JSON first
@@ -237,4 +242,4 @@ public class Utils {
                 e.printStackTrace();
             }*/
 
-        }
+}

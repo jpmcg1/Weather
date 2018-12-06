@@ -13,10 +13,6 @@ import java.util.ArrayList;
 // TODO udpate app so it gives the 5 day forecast every 3 hours - need a listItem and adapter for this
 // Put it in a new activity with a button on main activity saying "5 day forecast"
 
-// TODO Currently he main activity os showing the first Event in the ArrayLIst taken from the
-// JSON response of the 5 day forecast URL - this is NOT the current weather.
-// Need to change this back to the current weaterh
-
 public class MainActivity extends AppCompatActivity {
 
     // URL for the weather data from the OpenWeatherMap website for CURRENT weather.
