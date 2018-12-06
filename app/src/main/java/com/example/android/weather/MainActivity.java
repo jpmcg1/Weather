@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         TextView weatherTextView = (TextView) findViewById(R.id.weather);
         weatherTextView.setText(currentWeatherEvent.getWeather());
 
+        // Check the printout of the date
+        System.out.println("DATE INFO: " + formatDate(currentWeatherEvent.getTime()));
+
         // Update the weather icon ImageView
         ImageView weatherIconImageView = (ImageView) findViewById(R.id.weather_icon);
         String weatherId = currentWeatherEvent.getWeatherID();
@@ -74,10 +77,15 @@ public class MainActivity extends AppCompatActivity {
     private String formatTemperature(double temperature) {
         // Change the temperature from Kelvin to Degrees
         Double degreeTemperature = temperature - 273.15;
-
         // Temperature to 1 d.p.
         DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
         return magnitudeFormat.format(degreeTemperature);
+    }
+
+    // A method to format the date
+    private String formatDate(int date) {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(new Date(date * 1000L));
     }
 
     //-------------------------- AsyncTask ----------------------------------------------//

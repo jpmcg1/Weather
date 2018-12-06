@@ -53,7 +53,6 @@ public class Utils {
             Log.e(TAG, "Error creating URL", exception);
             return null;
         }
-
         return url;
     }
 
