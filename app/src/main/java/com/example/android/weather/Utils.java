@@ -157,6 +157,12 @@ public class Utils {
                 events.add(new Event(temperature, weatherMain, weatherId, timeAndDate));
             }
 
+            // Print out to screen the list of weather Events to check the ArrayList has been
+            // correctly formed
+            for (int j = 0; j < events.size() - 1; j++) {
+                System.out.println("Number: " + j + "; " + events.get(j).toString());
+            }
+
 // -----------------The below JSON parse is for the current weather URL---------------------//
 
             /*// Create a JSON object to hold the data

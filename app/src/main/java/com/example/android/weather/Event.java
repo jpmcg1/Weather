@@ -41,4 +41,13 @@ public class Event {
     public int getTime() {
         return time;
     }
+
+    @Override
+    public String toString() {
+        return "Temp: " + getTemperature() +
+                " ; Weather: " + getWeather() +
+                " ; WeatherID: " + getWeatherID() +
+                " ; Time " + getTime() +
+                "\n";
+    }
 }
