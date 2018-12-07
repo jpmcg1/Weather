@@ -22,28 +22,25 @@ public class WeatherForecastActivity extends AppCompatActivity{
 
         // Create an AsyncTask to perform the HTTP request on the given URL.
         // When the result is received, update the UI.
-        /*WeatherForecastAsyncTask task = new WeatherForecastAsyncTask();
-        task.execute(WEATHER_FORECAST_REQUEST_URL);*/
+        WeatherForecastAsyncTask task = new WeatherForecastAsyncTask();
+        task.execute(WEATHER_FORECAST_REQUEST_URL);
+    }
 
-        final ArrayList<Event> res = new ArrayList<>();
-        res.add(new Event(255.5, "rain", "wind", 244));
-        res.add(new Event(242.5, "rain", "cold", 211));
-        res.add(new Event(888.4, "rain", "wind", 387));
-
+    private void updateUi(ArrayList<Event> results) {
         // Create new adapter for the weather forecast
         WeatherForecastAdapter adapter =
-                new WeatherForecastAdapter(this, res);
+                new WeatherForecastAdapter(this, results);
 
         // Create ListView to attach adapter to the list_item XML
         ListView listView = (ListView) findViewById(R.id.list);
 
         // Set the adapter to the listView
-        listView.setAdapter(adapter);
+        listView.setAdapter(adapter);;
     }
 
     //------------------WeatherForecastAsyncTask---------------------------------//
 
-    /*private class WeatherForecastAsyncTask
+    private class WeatherForecastAsyncTask
             extends AsyncTask<String, Void, ArrayList<Event>> {
 
         @Override
@@ -60,7 +57,7 @@ public class WeatherForecastActivity extends AppCompatActivity{
             if (results == null) {
                 return;
             }
-            mResults = results;
+            updateUi(results);
         }
-    }*/
+    }
 }
