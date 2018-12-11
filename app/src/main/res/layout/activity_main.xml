@@ -15,7 +15,8 @@
         android:paddingBottom="16dp"
         android:textAllCaps="true"
         android:gravity="center_horizontal"
-        android:text="What is the weather in Manchester?!"
+        android:textSize="40sp"
+        android:text="@string/manchester"
         />
 
     <ImageView
@@ -32,6 +33,7 @@
         android:paddingTop="16dp"
         android:gravity="center_horizontal"
         android:text="Current Temperature"
+        android:textSize="20sp"
         />
 
     <TextView
@@ -52,7 +54,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:textAllCaps="true"
         android:textAppearance="?android:textAppearanceMedium"
         android:gravity="center"
         tools:text="DRIZZLE"/>

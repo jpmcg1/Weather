@@ -4,9 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
-
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class WeatherForecastActivity extends AppCompatActivity{
     ArrayList<Event> mResults;

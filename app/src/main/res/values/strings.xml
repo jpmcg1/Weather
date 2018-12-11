@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Weather</string>
     <string name="icon_description">Icon depending on predicted weather</string>
+    <string name="manchester">Manchester</string>
+    <string name="degreesC">°C</string>
 </resources>

@@ -8,13 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    // URL for the weather data from the OpenWeatherMap website for CURRENT weather.
+    // URL for the weather data from the OpenWeatherMap website for CURRENT weather in Manchester.
     private static final String WEATHER_REQUEST_URL =
             "http://api.openweathermap.org/data/2.5/weather?q=Manchester,uk&appid=51925842ffff00a9ea6b84970bd7321e";
 
@@ -46,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateUi(Event result) {
         // Update the temperature TextView
         TextView tempTextVIew = (TextView) findViewById(R.id.temp);
-        tempTextVIew.setText(result.getTemperature());
+        tempTextVIew.setText(result.getTemperature() + "\u00b0C");
 
         // Update the Weather TextView
         TextView weatherTextView = (TextView) findViewById(R.id.weather);

@@ -1,7 +1,6 @@
 package com.example.android.weather;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,10 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.text.DateFormatSymbols;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class WeatherForecastAdapter extends ArrayAdapter<Event> {
 
@@ -75,9 +71,6 @@ public class WeatherForecastAdapter extends ArrayAdapter<Event> {
         } else {
             weatherIconImageView.setImageResource(R.drawable.unknown);
         }
-
-        // TODO add in images to Drawable file and set them to UI here.
-        // Check Main Activity for details
 
         return listItemView;
     }
