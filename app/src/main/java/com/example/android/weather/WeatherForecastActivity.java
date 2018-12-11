@@ -35,7 +35,7 @@ public class WeatherForecastActivity extends AppCompatActivity{
         ListView listView = (ListView) findViewById(R.id.list);
 
         // Set the adapter to the listView
-        listView.setAdapter(adapter);;
+        listView.setAdapter(adapter);
     }
 
     //------------------WeatherForecastAsyncTask---------------------------------//

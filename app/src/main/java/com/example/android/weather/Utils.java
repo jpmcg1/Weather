@@ -18,7 +18,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Utils {
 
@@ -155,8 +158,10 @@ public class Utils {
             // Access the "main" object
             JSONObject main = object.getJSONObject("main");
             Double temperature = main.getDouble("temp");
+            // Convert temp from Kelvin to degrees and appropriate d.p.
+            String temp = formatTemperature(temperature);
 
-            Event currentWeather = new Event(temperature, weatherMain, weatherId);
+            Event currentWeather = new Event(temp, weatherMain, weatherId);
 
             // Print out the retrieved current weather Event to check it worked
             System.out.println(currentWeather.toString());
@@ -193,10 +198,14 @@ public class Utils {
                 JSONObject firstObject = listArray.getJSONObject(i);
                 // Get time and date info
                 int timeAndDate = firstObject.getInt("dt");
+                // Convert the form of the date from milliseconds
+                String date = formatDate(timeAndDate);
                 // Access the "main" object
                 JSONObject mainObject = firstObject.getJSONObject("main");
                 // Get temp info
                 double temperature = mainObject.getDouble("temp");
+                // Convert the temperature from Kelvin to degrees and to appropriate d.p.
+                String temp = formatTemperature(temperature);
                 // Access the "weather" object
                 JSONArray weather = firstObject.getJSONArray("weather");
                 // Access the first object in the array
@@ -207,9 +216,8 @@ public class Utils {
                 String weatherMain = firstObjectII.getString("main");
 
                 // Add the Event to the ArrayList
-                events.add(new Event(temperature, weatherMain, weatherId, timeAndDate));
+                events.add(new Event(temp, weatherMain, weatherId, date));
             }
-
             // Print out to screen the list of weather Events to check the ArrayList has been
             // correctly formed
             for (int j = 0; j < events.size() - 1; j++) {
@@ -242,4 +250,20 @@ public class Utils {
                 e.printStackTrace();
             }*/
 
+    //----------------------------------------------------------------------------//
+
+    // A method to format the date
+    private static String formatDate(int date) {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                .format(new Date(date * 1000L));
+    }
+
+    // A method to format the temperature units and dps
+    private static String formatTemperature(double temperature) {
+        // Change the temperature from Kelvin to Degrees
+        Double degreeTemperature = temperature - 273.15;
+        // Temperature to 1 d.p.
+        DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
+        return magnitudeFormat.format(degreeTemperature);
+    }
 }

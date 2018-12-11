@@ -11,10 +11,6 @@ import android.widget.TextView;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-
-// TODO udpate app so it gives the 5 day forecast every 3 hours - need a listItem and adapter for this
-// Put it in a new activity with a button on main activity saying "5 day forecast"
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateUi(Event result) {
         // Update the temperature TextView
         TextView tempTextVIew = (TextView) findViewById(R.id.temp);
-        tempTextVIew.setText(formatTemperature(result.getTemperature()));
+        tempTextVIew.setText(result.getTemperature());
 
         // Update the Weather TextView
         TextView weatherTextView = (TextView) findViewById(R.id.weather);
@@ -82,21 +78,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             weatherIconImageView.setImageResource(R.drawable.unknown);
         }
-    }
-
-    // A method to format the temperature units and dps
-    private String formatTemperature(double temperature) {
-        // Change the temperature from Kelvin to Degrees
-        Double degreeTemperature = temperature - 273.15;
-        // Temperature to 1 d.p.
-        DecimalFormat magnitudeFormat = new DecimalFormat("0.0");
-        return magnitudeFormat.format(degreeTemperature);
-    }
-
-    // A method to format the date
-    private String formatDate(int date) {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-                .format(new Date(date * 1000L));
     }
 
     //-------------------------- AsyncTask ----------------------------------------------//

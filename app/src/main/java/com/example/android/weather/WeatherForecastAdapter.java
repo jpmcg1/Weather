@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import java.text.DateFormatSymbols;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class WeatherForecastAdapter extends ArrayAdapter<Event> {
 
@@ -34,15 +37,31 @@ public class WeatherForecastAdapter extends ArrayAdapter<Event> {
 
         // Set the time on the UI for the weather forecast of the current Event
         TextView timeTextView = (TextView) listItemView.findViewById(R.id.time);
-        timeTextView.setText(Integer.toString(currentEvent.getTime()));
+        timeTextView.setText(returnDate(currentEvent.getDate()));
 
         // Set the temperature on the UI for the weather forecast of the current Event
         TextView tempTextView = (TextView) listItemView.findViewById(R.id.temp_predicted);
-        tempTextView.setText(Double.toString(currentEvent.getTemperature()));
+        tempTextView.setText(currentEvent.getTemperature());
 
         // TODO add in images to Drawable file and set them to UI here.
         // Check Main Activity for details
 
         return listItemView;
+    }
+
+    public String returnDate(String date) {
+        // String is returned from JSON in the "yyyy-MM-dd HH:mm:ss" format.
+        // Extract the Date value only for addition to the UI
+        String day = Character.toString(date.charAt(8)) + Character.toString(date.charAt(9));
+        String month = Character.toString(date.charAt(5)) + Character.toString(date.charAt(6));
+        int numberMonth = Integer.parseInt(month);
+        String vocabMonth = getMonth(numberMonth);
+
+        return day + " " + vocabMonth;
+    }
+
+    // Converts numeral month into vocab month
+    public String getMonth(int month) {
+        return new DateFormatSymbols().getMonths()[month-1];
     }
 }

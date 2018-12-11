@@ -6,7 +6,7 @@ package com.example.android.weather;
 public class Event {
 
     // The current temperature
-    private double temperature;
+    private String temperature;
 
     // The current weather
     private String weather;
@@ -14,25 +14,26 @@ public class Event {
     // The weather icon from the API
     private String weatherID;
 
-    private int time;
+    // The date of the forecast weather
+    private String date;
 
     // Constructs a new weather Event
-    public Event(double eventTemperature, String eventWeather, String eventWeatherID) {
+    public Event(String eventTemperature, String eventWeather, String eventWeatherID) {
         temperature = eventTemperature;
         weather = eventWeather;
         weatherID = eventWeatherID;
     }
 
     // Constructs a new weather Event
-    public Event(double eventTemperature, String eventWeather, String eventWeatherID,
-                 int timeAndDate) {
+    public Event(String eventTemperature, String eventWeather, String eventWeatherID,
+                 String timeAndDate) {
         temperature = eventTemperature;
         weather = eventWeather;
         weatherID = eventWeatherID;
-        time = timeAndDate;
+        date = timeAndDate;
     }
 
-    public double getTemperature() {
+    public String getTemperature() {
         return temperature;
     }
 
@@ -44,8 +45,8 @@ public class Event {
         return weatherID;
     }
 
-    public int getTime() {
-        return time;
+    public String getDate() {
+        return date;
     }
 
     @Override
@@ -53,7 +54,7 @@ public class Event {
         return "Temp: " + getTemperature() +
                 " ; Weather: " + getWeather() +
                 " ; WeatherID: " + getWeatherID() +
-                " ; Time " + getTime() +
+                " ; Time " + getDate() +
                 "\n";
     }
 }
