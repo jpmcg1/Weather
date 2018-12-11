@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="icon_description">Icon depending on predicted weather</string>
 </resources>
